@@ -23,7 +23,9 @@ func main() {
 	// a := d4p1(readInput(4))
 	// a := d4p2(readInput(4))
 	// a := d5p1(readInput(5))
-	a := d5p2(readInput(5))
+	// a := d5p2(readInput(5))
+	// a := d6p1(readInput(6))
+	a := d6p2(readInput(6))
 	fmt.Println("The ANSWER is: ")
 	fmt.Println(a)
 }

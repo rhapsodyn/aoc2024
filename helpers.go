@@ -6,6 +6,47 @@ import (
 	"strings"
 )
 
+type Face int
+
+const (
+	Up Face = iota + 1
+	Down
+	Left
+	Right
+)
+
+type Point struct {
+	X int
+	Y int
+}
+
+type Vector struct {
+	X int
+	Y int
+}
+
+type Matrix struct {
+	raw string
+	row int
+	col int
+}
+
+func FaceDisplay(f Face) string {
+	var s string
+	switch f {
+	case Up:
+		s = "Up"
+	case Down:
+		s = "Down"
+	case Left:
+		s = "Left"
+	case Right:
+		s = "Right"
+	}
+
+	return s
+}
+
 func Must[T any](ret T, err error) T {
 	if err != nil {
 		panic(err)
@@ -28,28 +69,12 @@ func Must2[T1, T2 any](ret1 T1, ret2 T2, err error) (T1, T2) {
 	return ret1, ret2
 }
 
-func abs(a int) int {
+func Abs(a int) int {
 	if a > 0 {
 		return a
 	} else {
 		return -a
 	}
-}
-
-type Point struct {
-	x int
-	y int
-}
-
-type Vector struct {
-	x int
-	y int
-}
-
-type Matrix struct {
-	raw string
-	row int
-	col int
 }
 
 func NewMatrix(s string) (*Matrix, error) {
@@ -74,12 +99,15 @@ func NewMatrix(s string) (*Matrix, error) {
 	}, nil
 }
 
-type TraverseHandler func(x int, y int, ch string)
+type TraverseHandler func(x int, y int, ch string) bool
 
 func (m *Matrix) Traverse(handler TraverseHandler) {
 	for y := 0; y < m.col; y++ {
 		for x := 0; x < m.row; x++ {
-			handler(x, y, string(m.raw[y*m.col+x]))
+			stop := handler(x, y, string(m.raw[y*m.col+x]))
+			if stop {
+				return
+			}
 		}
 	}
 }
@@ -89,4 +117,28 @@ func (m *Matrix) At(x, y int) (string, error) {
 		return "", errors.New("OutOfBound")
 	}
 	return string(m.raw[y*m.col+x]), nil
+}
+
+func (m *Matrix) Set(x, y int, ch rune) {
+	if x >= 0 && y >= 0 && x < m.col && y < m.row {
+		replaced := []rune(m.raw)
+		i := y*m.row + x
+		replaced[i] = ch
+		m.raw = string(replaced)
+	}
+}
+
+func (m *Matrix) Clone() Matrix {
+	return Matrix{
+		row: m.row,
+		col: m.col,
+		raw: strings.Clone(m.raw),
+	}
+}
+
+func (m *Matrix) Pretty() {
+	for i := 0; i < m.row; i++ {
+		fmt.Println(m.raw[i*m.col : (i+1)*m.col])
+	}
+	fmt.Println()
 }

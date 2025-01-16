@@ -27,7 +27,7 @@ func d1p1(input string) int {
 	dis := 0
 	for i, l := range ls {
 		r := rs[i]
-		dis += abs(l - r)
+		dis += Abs(l - r)
 	}
 
 	return dis
