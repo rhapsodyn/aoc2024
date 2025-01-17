@@ -3,6 +3,7 @@ package main
 import (
 	"errors"
 	"fmt"
+	"math"
 	"strings"
 )
 
@@ -77,6 +78,10 @@ func Abs(a int) int {
 	}
 }
 
+func PowInt(x, y int) int {
+	return int(math.Pow(float64(x), float64(y)))
+}
+
 func NewMatrix(s string) (*Matrix, error) {
 	// cut leading & tailing `br`s
 	s = strings.Trim(s, "\n")
@@ -99,6 +104,10 @@ func NewMatrix(s string) (*Matrix, error) {
 	}, nil
 }
 
+func MustMatrix(s string) *Matrix {
+	return Must(NewMatrix(s))
+}
+
 type TraverseHandler func(x int, y int, ch string) bool
 
 func (m *Matrix) Traverse(handler TraverseHandler) {
@@ -117,6 +126,10 @@ func (m *Matrix) At(x, y int) (string, error) {
 		return "", errors.New("OutOfBound")
 	}
 	return string(m.raw[y*m.col+x]), nil
+}
+
+func (m *Matrix) PointAt(p Point) (string, error) {
+	return m.At(p.X, p.Y)
 }
 
 func (m *Matrix) Set(x, y int, ch rune) {
