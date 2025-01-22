@@ -32,6 +32,10 @@ type Matrix struct {
 	col int
 }
 
+func (p Point) String() string {
+	return fmt.Sprintf("(%d,%d)", p.X, p.Y)
+}
+
 func FaceDisplay(f Face) string {
 	var s string
 	switch f {

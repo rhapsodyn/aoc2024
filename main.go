@@ -12,7 +12,6 @@ func readInput(n int) string {
 	return string(bytes)
 }
 
-
 func main() {
 	fmt.Println("Ladies and gentlemen, (may not block 4ever)")
 	// a := d1p1(readInput(1))
@@ -30,7 +29,11 @@ func main() {
 	// a := d7p1(readInput(7))
 	// a := d7p2(readInput(7))
 	// a := d8p1(readInput(8))
-	a := d8p2(readInput(8))
+	// a := d8p2(readInput(8))
+	// a := d9p1(readInput(9))
+	// a := d9p2(readInput(9))
+	// a := dap1(readInput(10))
+	a := dap2(readInput(10))
 	fmt.Println("The ANSWER is: ")
 	fmt.Println(a)
 }
