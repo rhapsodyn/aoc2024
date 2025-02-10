@@ -36,7 +36,8 @@ func run() {
 	// a := dap1(readInput(10))
 	// a := dap2(readInput(10))
 	// a := dbp1(readInput(11), 25)
-	a := dbp2(readInput(11), 75)
+	// a := dbp2(readInput(11), 75)
+	a := dcp1(readInput(12))
 	fmt.Println("The ANSWER is: ")
 	fmt.Println(a)
 }
@@ -49,6 +50,5 @@ func main() {
 		pprof.StartCPUProfile(f)
 		defer pprof.StopCPUProfile()
 	}
-
 	run()
 }
